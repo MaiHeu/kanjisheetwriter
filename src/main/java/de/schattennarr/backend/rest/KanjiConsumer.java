@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 public class KanjiConsumer
 {
 	private static final Logger logger = LoggerFactory.getLogger(KanjiConsumer.class);
+
 	public KanjiDTO getKanjiDTO(String kanji) throws NotFoundException
 	{
 		String resourceUrl = "https://kanjiapi.dev/v1/kanji/";
