@@ -26,6 +26,8 @@ public class KanjiConsumer
 		{
 			throw new NotFoundException("The requested Kanji was not found or the API is down!");
 		}
+
+		kanjiDTO.setKanjiUri();
 		logger.debug("Object created:"+kanjiDTO.toString());
 		return kanjiDTO;
 	}

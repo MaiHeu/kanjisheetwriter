@@ -34,7 +34,6 @@ public class KanjiDTO implements Serializable
 
 	/**
 	* This method is to be called to find the Kanji svg data
-	*
 	* */
 	public void setKanjiUri() throws NotFoundException, NullPointerException
 	{
