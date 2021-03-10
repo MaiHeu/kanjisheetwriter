@@ -20,10 +20,8 @@ public class KanjiDTO implements Serializable
 	private static final Logger logger = LoggerFactory.getLogger(KanjiDTO.class);
 	@NonNull String kanji;
 	short grade;
-
 	@JsonProperty("stroke_count")
 	@NonNull short strokeCount;
-
 	ArrayList<String> meanings;
 	@JsonProperty("kun_readings")
 	ArrayList<String> kunReadings;
@@ -42,10 +40,9 @@ public class KanjiDTO implements Serializable
 			throw new NullPointerException("No Unicode-Data was given!");
 		}
 
-		URL kanjipath = this.getClass().getResource("/kanji/0"+unicode+".svg");
+		kanjiUri = this.getClass().getResource("/kanji/0"+unicode+".svg");
 
-		if(kanjipath.getPath() != null){
-			kanjiUri = kanjipath;
+		if(kanjiUri.getPath() != null){
 			logger.debug(kanjiUri.toString());
 			return;
 		}

@@ -8,7 +8,7 @@ class AboutView extends PolymerElement {
   }
   static get template() {
     return html`
-<div>
+<div id="div">
   Content placeholder 
 </div>
 `;
