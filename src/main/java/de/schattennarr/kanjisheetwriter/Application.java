@@ -24,7 +24,6 @@ public class Application extends SpringBootServletInitializer {
         try
         {
             kanjiDTO = consumer.getKanjiDTO("雨");
-            kanjiDTO.setKanjiUri();
         }
         catch (Exception e)
         {

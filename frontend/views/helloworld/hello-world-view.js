@@ -4,10 +4,6 @@ import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-button';
 
 class HelloWorldView extends PolymerElement {
-  _attachDom(dom) {
-    // Do not use a shadow root
-    this.appendChild(dom);
-  }
   static get template() {
     return html`
       <vaadin-text-field id="name" label="Your name"></vaadin-text-field>

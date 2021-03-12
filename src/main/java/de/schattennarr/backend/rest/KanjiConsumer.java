@@ -1,6 +1,7 @@
 package de.schattennarr.backend.rest;
 import de.schattennarr.kanjisheetwriter.Application;
 import de.schattennarr.kanjisheetwriter.data.KanjiDTO;
+import de.schattennarr.kanjisheetwriter.data.KanjiRestDTO;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +21,17 @@ public class KanjiConsumer
 	{
 		String resourceUrl = "https://kanjiapi.dev/v1/kanji/";
 		RestTemplate restTemplate = new RestTemplate();
-		KanjiDTO kanjiDTO = restTemplate.getForObject(resourceUrl + kanji, KanjiDTO.class);
+		KanjiRestDTO kanjiRestDTO = restTemplate.getForObject(resourceUrl + kanji, KanjiRestDTO.class);
+
+		KanjiDTO kanjiDTO = new KanjiDTO(kanjiRestDTO.getKanji(), kanjiRestDTO.getGrade(),
+				kanjiRestDTO.getStrokeCount(), kanjiRestDTO.getMeanings(), kanjiRestDTO.getKunReadings(),
+				kanjiRestDTO.getOnReadings(),kanjiRestDTO.getUnicode());
 
 		if(!(kanjiDTO.getKanji().equals(kanji)))
 		{
 			throw new NotFoundException("The requested Kanji was not found or the API is down!");
 		}
 
-		kanjiDTO.setKanjiUri();
 		logger.debug("Object created:"+kanjiDTO.toString());
 		return kanjiDTO;
 	}
