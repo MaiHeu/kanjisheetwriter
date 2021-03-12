@@ -35,7 +35,6 @@ public class KanjiDTO implements Serializable
 		this.kunReadings = kunReadings;
 		this.onReadings = onReadings;
 		this.unicode = unicode;
-
 		try
 		{
 			setKanjiUri();
@@ -49,9 +48,6 @@ public class KanjiDTO implements Serializable
 	/**
 	* This method is to be called to find the Kanji svg data
 	* */
-
-
-
 	private void setKanjiUri() throws NotFoundException, NullPointerException
 	{
 		kanjiUri = this.getClass().getResource("/kanji/0"+unicode+".svg");
