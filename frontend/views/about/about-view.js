@@ -26,6 +26,7 @@ class AboutView extends PolymerElement {
  </vaadin-button>
 </div>
 <div style="width: 100%; height: 100%;">
+  <span id="downloadLink"/>
   Div 
 </div>
 `;
