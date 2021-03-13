@@ -14,9 +14,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import de.schattennarr.kanjisheetwriter.data.KanjiDTO;
-import de.schattennarr.kanjisheetwriter.generator.SheetGenerator;
+import de.schattennarr.kanjisheetwriter.rest.KanjiConsumer;
 import de.schattennarr.kanjisheetwriter.views.about.AboutView.AboutViewModel;
 import de.schattennarr.kanjisheetwriter.views.main.MainView;
+import javassist.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @JsModule("./views/about/about-view.js")
 @CssImport("./views/about/about-view.css")
@@ -34,22 +36,30 @@ public class AboutView extends PolymerTemplate<AboutViewModel> {
     private Span downloadLink;
 
     Binder<KanjiDTO> binder = new Binder<>(KanjiDTO.class);
+
     // This is the Java companion file of a design
-    // You can find the design file in /frontend/views/views/about/about-view.js
+    // You can find the design file in /frontend/views/views/about/about-vi ew.js
     // The design can be easily edited by using Vaadin Designer
     // (vaadin.com/designer)
-
-    public static interface AboutViewModel extends TemplateModel {
+    public interface AboutViewModel extends TemplateModel {
     }
 
-    public AboutView() {
+    private KanjiConsumer consumer;
+
+    @Autowired
+    public AboutView(KanjiConsumer consumer) {
+        this.consumer = consumer;
         buttonGenerateSheet.addClickListener(e -> generateKanjiSheet());
     }
 
     private void generateKanjiSheet() {
-        SheetGenerator generator = new SheetGenerator();
+        try {
+            KanjiDTO dto = consumer.getKanjiDTO(kanjiSearchTextField.getValue());
+            downloadLink.getElement().setProperty("innerHTML", "<a target=_blank href=\"/download?kanji=" + dto.getUnicode() + "&big=" + "radioButtonBigGrid".equals(radioGroupGridSelect.getValue()) + "\">Hier clicken um das Sheet anzuzeigen</a>");
+        } catch (NotFoundException e) {
+            downloadLink.setText("Das eingegebene Kanji konnte leider nicht gefunden werden.");
+        }
 
-        downloadLink.getElement().setProperty("innerHTML", "<a target=_blank href=\"/download?kanji=" + kanjiSearchTextField.getValue() + "&big=" + "radioButtonBigGrid".equals(radioGroupGridSelect.getValue()) + "\">Hier clicken um das Sheet anzuzeigen</a>");
     }
 
 

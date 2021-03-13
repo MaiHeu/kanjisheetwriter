@@ -36,32 +36,5 @@ public class KanjiDTO implements Serializable
 		this.kunReadings = kunReadings;
 		this.onReadings = onReadings;
 		this.unicode = unicode;
-		try
-		{
-			setKanjiPath();
-		}
-		catch (NotFoundException e)
-		{
-			e.printStackTrace();
-		}
 	}
-
-	/**
-	* This method is to be called to find the Kanji svg data
-	* */
-	private void setKanjiPath() throws NotFoundException
-	{
-		logger.debug(this.getClass().getResource("/kanji/0"+unicode+".svg").toString().replace("file:/",""));
-		kanjiPath = Paths.get(this.getClass().getResource("/kanji/0"+unicode+".svg").toString().replace("file:/",""));
-		logger.debug(kanjiPath.toString());
-		if (kanjiPath.getFileName() != null)
-		{
-			logger.debug(kanjiPath.toString());
-			return;
-		} else
-		{
-			throw new NotFoundException("SVG not found! :(");
-		}
-	}
-
 }

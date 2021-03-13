@@ -1,18 +1,16 @@
-package de.schattennarr.backend.rest;
-import de.schattennarr.kanjisheetwriter.Application;
+package de.schattennarr.kanjisheetwriter.rest;
 import de.schattennarr.kanjisheetwriter.data.KanjiDTO;
 import de.schattennarr.kanjisheetwriter.data.KanjiRestDTO;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 
 /*
 * This class returns a KanjiDTO Object for any Kanji given
 * */
+@Component
 public class KanjiConsumer
 {
 	private static final Logger logger = LoggerFactory.getLogger(KanjiConsumer.class);
