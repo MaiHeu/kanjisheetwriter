@@ -3,14 +3,14 @@ package de.schattennarr.kanjisheetwriter.data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class KanjiRestDTO
 {
 	private static final Logger logger = LoggerFactory.getLogger(KanjiRestDTO.class);

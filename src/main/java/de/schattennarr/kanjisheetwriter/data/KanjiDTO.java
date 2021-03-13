@@ -6,7 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 @Data
@@ -24,7 +25,7 @@ public class KanjiDTO implements Serializable
 	@JsonProperty("on_readings")
 	ArrayList<String> onReadings;
 	@NonNull String unicode;
-	@Setter(AccessLevel.NONE)URL kanjiUri;
+	@Setter(AccessLevel.NONE) Path kanjiPath;
 
 	public KanjiDTO(@NonNull String kanji, short grade, @NonNull short strokeCount, ArrayList<String> meanings, ArrayList<String> kunReadings, ArrayList<String> onReadings, @NonNull String unicode)
 	{
@@ -37,7 +38,7 @@ public class KanjiDTO implements Serializable
 		this.unicode = unicode;
 		try
 		{
-			setKanjiUri();
+			setKanjiPath();
 		}
 		catch (NotFoundException e)
 		{
@@ -48,16 +49,19 @@ public class KanjiDTO implements Serializable
 	/**
 	* This method is to be called to find the Kanji svg data
 	* */
-	private void setKanjiUri() throws NotFoundException, NullPointerException
+	private void setKanjiPath() throws NotFoundException
 	{
-		kanjiUri = this.getClass().getResource("/kanji/0"+unicode+".svg");
-
-		if(kanjiUri.getPath() != null){
-			logger.debug(kanjiUri.toString());
+		logger.debug(this.getClass().getResource("/kanji/0"+unicode+".svg").toString().replace("file:/",""));
+		kanjiPath = Paths.get(this.getClass().getResource("/kanji/0"+unicode+".svg").toString().replace("file:/",""));
+		logger.debug(kanjiPath.toString());
+		if (kanjiPath.getFileName() != null)
+		{
+			logger.debug(kanjiPath.toString());
 			return;
+		} else
+		{
+			throw new NotFoundException("SVG not found! :(");
 		}
-		throw new NotFoundException("SVG not found! :(");
-
 	}
 
 }

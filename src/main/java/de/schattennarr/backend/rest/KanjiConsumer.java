@@ -26,6 +26,7 @@ public class KanjiConsumer
 		KanjiDTO kanjiDTO = new KanjiDTO(kanjiRestDTO.getKanji(), kanjiRestDTO.getGrade(),
 				kanjiRestDTO.getStrokeCount(), kanjiRestDTO.getMeanings(), kanjiRestDTO.getKunReadings(),
 				kanjiRestDTO.getOnReadings(),kanjiRestDTO.getUnicode());
+		logger.debug(kanjiDTO.toString());
 
 		if(!(kanjiDTO.getKanji().equals(kanji)))
 		{
