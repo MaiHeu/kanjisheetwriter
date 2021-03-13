@@ -18,6 +18,8 @@ import de.schattennarr.kanjisheetwriter.rest.KanjiConsumer;
 import de.schattennarr.kanjisheetwriter.views.about.AboutView.AboutViewModel;
 import de.schattennarr.kanjisheetwriter.views.main.MainView;
 import javassist.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @JsModule("./views/about/about-view.js")
@@ -26,16 +28,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route(value = "about", layout = MainView.class)
 @PageTitle("About")
 public class AboutView extends PolymerTemplate<AboutViewModel> {
+    private static final Logger logger = LoggerFactory.getLogger(AboutView.class);
     @Id("buttonGenerateSheet")
     private Button buttonGenerateSheet;
     @Id("kanjiSearchTextField")
     private TextField kanjiSearchTextField;
-    @Id("radioGroupGridSelect")
-    private RadioButtonGroup<String> radioGroupGridSelect;
     @Id("downloadLink")
     private Span downloadLink;
-
+    @Id("radioGroupGridSelect")
+    private RadioButtonGroup<String> radioGroupGridSelect;
+    private KanjiConsumer consumer;
     Binder<KanjiDTO> binder = new Binder<>(KanjiDTO.class);
+    private boolean bigGrid;
 
     // This is the Java companion file of a design
     // You can find the design file in /frontend/views/views/about/about-vi ew.js
@@ -44,18 +48,25 @@ public class AboutView extends PolymerTemplate<AboutViewModel> {
     public interface AboutViewModel extends TemplateModel {
     }
 
-    private KanjiConsumer consumer;
+
 
     @Autowired
     public AboutView(KanjiConsumer consumer) {
+        radioGroupGridSelect.setItems("Großes Sheet", "Kleines Sheet");
         this.consumer = consumer;
         buttonGenerateSheet.addClickListener(e -> generateKanjiSheet());
+        radioGroupGridSelect.addValueChangeListener( e -> {
+            bigGrid = e.getValue().startsWith("Gr");
+        });
     }
 
     private void generateKanjiSheet() {
         try {
             KanjiDTO dto = consumer.getKanjiDTO(kanjiSearchTextField.getValue());
-            downloadLink.getElement().setProperty("innerHTML", "<a target=_blank href=\"/download?kanji=" + dto.getUnicode() + "&big=" + "radioButtonBigGrid".equals(radioGroupGridSelect.getValue()) + "\">Hier clicken um das Sheet anzuzeigen</a>");
+            downloadLink.getElement().setProperty("innerHTML",
+                    "<a target=_blank href=\"/download?kanji=" + dto.getUnicode() + "&big=" + bigGrid + "\">Hier " +
+                            "klicken um das Sheet anzuzeigen</a>");
+            logger.debug(radioGroupGridSelect.toString());
         } catch (NotFoundException e) {
             downloadLink.setText("Das eingegebene Kanji konnte leider nicht gefunden werden.");
         }

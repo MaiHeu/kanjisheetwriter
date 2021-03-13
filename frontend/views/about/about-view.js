@@ -14,11 +14,11 @@ class AboutView extends PolymerElement {
   <iron-icon icon="lumo:search" slot="prefix"></iron-icon>
  </vaadin-text-field>
  <vaadin-radio-group value="foo" id="radioGroupGridSelect">
-  <vaadin-radio-button name="foo" id="radioButtonBigGrid">
-    Großes Grid 
+  <vaadin-radio-button name="big" id="big" checked>
+    Großes Sheet 
   </vaadin-radio-button>
-  <vaadin-radio-button name="bar" id="radioButtonSmallGrid">
-    Kleines Grid 
+  <vaadin-radio-button name="small" id="small" tabindex="-1">
+    Kleines Sheet 
   </vaadin-radio-button>
  </vaadin-radio-group>
  <vaadin-button id="buttonGenerateSheet">
@@ -26,8 +26,7 @@ class AboutView extends PolymerElement {
  </vaadin-button>
 </div>
 <div style="width: 100%; height: 100%;">
-  <span id="downloadLink"/>
-  Div 
+ <span id="downloadLink"></span> Div 
 </div>
 `;
   }
