@@ -15,7 +15,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import de.schattennarr.kanjisheetwriter.data.KanjiDTO;
 import de.schattennarr.kanjisheetwriter.rest.KanjiConsumer;
-import de.schattennarr.kanjisheetwriter.views.about.AboutView.AboutViewModel;
+import de.schattennarr.kanjisheetwriter.views.about.GeneratorView.AboutViewModel;
 import de.schattennarr.kanjisheetwriter.views.main.MainView;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
@@ -27,8 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Tag("about-view")
 @Route(value = "about", layout = MainView.class)
 @PageTitle("About")
-public class AboutView extends PolymerTemplate<AboutViewModel> {
-    private static final Logger logger = LoggerFactory.getLogger(AboutView.class);
+public class GeneratorView extends PolymerTemplate<AboutViewModel> {
+    private static final Logger logger = LoggerFactory.getLogger(GeneratorView.class);
     @Id("buttonGenerateSheet")
     private Button buttonGenerateSheet;
     @Id("kanjiSearchTextField")
@@ -38,7 +38,6 @@ public class AboutView extends PolymerTemplate<AboutViewModel> {
     @Id("radioGroupGridSelect")
     private RadioButtonGroup<String> radioGroupGridSelect;
     private KanjiConsumer consumer;
-    Binder<KanjiDTO> binder = new Binder<>(KanjiDTO.class);
     private boolean bigGrid;
 
     // This is the Java companion file of a design
@@ -48,10 +47,8 @@ public class AboutView extends PolymerTemplate<AboutViewModel> {
     public interface AboutViewModel extends TemplateModel {
     }
 
-
-
     @Autowired
-    public AboutView(KanjiConsumer consumer) {
+    public GeneratorView(KanjiConsumer consumer) {
         radioGroupGridSelect.setItems("Großes Sheet", "Kleines Sheet");
         this.consumer = consumer;
         buttonGenerateSheet.addClickListener(e -> generateKanjiSheet());
@@ -62,7 +59,7 @@ public class AboutView extends PolymerTemplate<AboutViewModel> {
 
     private void generateKanjiSheet() {
         try {
-            KanjiDTO dto = consumer.getKanjiDTO(kanjiSearchTextField.getValue());
+            KanjiDTO dto = consumer.getKanjiDTO(kanjiSearchTextField.getValue().stripTrailing());
             downloadLink.getElement().setProperty("innerHTML",
                     "<a target=_blank href=\"/download?kanji=" + dto.getUnicode() + "&big=" + bigGrid + "\">Hier " +
                             "klicken um das Sheet anzuzeigen</a>");

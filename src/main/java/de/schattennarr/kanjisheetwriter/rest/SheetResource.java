@@ -25,7 +25,8 @@ public class SheetResource {
 
 
     @GetMapping(path="/download")
-    public ResponseEntity<String> getSheet(@RequestParam("kanji") String kanjiname, @RequestParam("big") boolean big) {
+    public ResponseEntity<String> getSheet(@RequestParam("kanji") String kanjiname, @RequestParam("big") boolean big)
+    {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "filename=\"KanjiSheet.html\"");
         ResponseEntity<String> response = new ResponseEntity<>(((big)? bigTemplate: smallTemplate).replace("{PLACEHOLDER}", "kanji/0" + kanjiname + ".svg"), headers, HttpStatus.ACCEPTED);

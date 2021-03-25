@@ -22,15 +22,4 @@ import com.vaadin.flow.router.RouteAlias;
 @PageTitle("Hello World")
 public class HelloWorldView extends PolymerTemplate<TemplateModel> {
 
-    @Id
-    private TextField name;
-
-    @Id
-    private Button sayHello;
-
-    public HelloWorldView() {
-        sayHello.addClickListener(e -> {
-            Notification.show("Hello " + name.getValue());
-        });
-    }
 }

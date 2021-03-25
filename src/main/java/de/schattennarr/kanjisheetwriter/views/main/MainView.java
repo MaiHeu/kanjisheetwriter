@@ -18,12 +18,8 @@ import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.PageTitle;
-import de.schattennarr.kanjisheetwriter.views.main.MainView;
 import de.schattennarr.kanjisheetwriter.views.helloworld.HelloWorldView;
-import de.schattennarr.kanjisheetwriter.views.about.AboutView;
+import de.schattennarr.kanjisheetwriter.views.about.GeneratorView;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -78,7 +74,7 @@ public class MainView extends AppLayout {
     }
 
     private static Tab[] getAvailableTabs() {
-        return new Tab[]{createTab("Hello World", HelloWorldView.class), createTab("About", AboutView.class)};
+        return new Tab[]{createTab("Startseite", HelloWorldView.class), createTab("Generator", GeneratorView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
